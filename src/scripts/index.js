@@ -9,17 +9,16 @@ const editButton = document.querySelector('.profile__edit-button');
 const popupImage = document.querySelector('.popup_type_image');
 const popupCardImage = document.querySelector('.popup__image');
 const popupCardImageTitle = document.querySelector('.popup__caption');
-const addCardPopup = document.querySelector('.popup_type_new-card');
-const editProfilePopup = document.querySelector('.popup_type_edit');
-const editProfileForm = document.forms['edit-profile'];
-const addCardForm = document.forms['new-place'];
-const nameInput = editProfileForm.elements.name;
-const jobInput = editProfileForm.elements.description;
-const cardFormName = addCardForm.elements['place-name'];
-const cardFormLink = addCardForm.elements['link'];
-const editProfileFormTitle = document.querySelector('.profile__title');
-const editProfileFormDescr = document.querySelector('.profile__description');
-const closeFormButton = document.querySelector('.popup__close');
+const cardPopup = document.querySelector('.popup_type_new-card');
+const profilePopup = document.querySelector('.popup_type_edit');
+const profileForm = document.forms['edit-profile'];
+const cardForm = document.forms['new-place'];
+const nameInput = profileForm.elements.name;
+const jobInput = profileForm.elements.description;
+const cardFormName = cardForm.elements['place-name'];
+const cardFormLink = cardForm.elements['link'];
+const profileFormTitle = document.querySelector('.profile__title');
+const profileFormDescr = document.querySelector('.profile__description');
 
 function renderCard(cardItem, removeCard, likeCard, openCardImagePopup) {
   const newCard = addCard(cardItem, removeCard, likeCard, openCardImagePopup);
@@ -37,19 +36,16 @@ function openCardImagePopup(cardImage, cardTitle) {
   openModal(popupImage);
 }
 
-function fillingEditProfileForm() {
-  nameInput.value = editProfileFormTitle.textContent;
-  jobInput.value = editProfileFormDescr.textContent;
-  closeFormButton.addEventListener('click', () => {
-    fillingEditProfileForm();
-  })
+function fillingProfileForm() {
+  nameInput.value = profileFormTitle.textContent;
+  jobInput.value = profileFormDescr.textContent;
 }
 
-function handleFormSubmit(evt) {
+function profileFormSubmit(evt) {
   evt.preventDefault();
-  editProfileFormTitle.textContent = nameInput.value;
-  editProfileFormDescr.textContent = jobInput.value;
-  closeModal(editProfilePopup);
+  profileFormTitle.textContent = nameInput.value;
+  profileFormDescr.textContent = jobInput.value;
+  closeModal(profilePopup);
 }
 
 function addingNewCardByUser(evt, item) {
@@ -60,11 +56,14 @@ function addingNewCardByUser(evt, item) {
   };
   const userNewCard = addCard(item, removeCard, likeCard, openCardImagePopup);
   cardContainer.prepend(userNewCard);
-  closeModal(addCardPopup);
-  addCardForm.reset();
+  closeModal(cardPopup);
+  cardForm.reset();
 }
 
-addButton.addEventListener('click', () => openModal(addCardPopup));
-addCardForm.addEventListener('submit', addingNewCardByUser);
-editButton.addEventListener('click', () => openModal(editProfilePopup), fillingEditProfileForm());
-editProfileForm.addEventListener('submit', handleFormSubmit);
+editButton.addEventListener('click', () => {
+  openModal(profilePopup);
+  fillingProfileForm();
+});
+addButton.addEventListener('click', () => openModal(cardPopup));
+cardForm.addEventListener('submit', addingNewCardByUser);
+profileForm.addEventListener('submit', profileFormSubmit);
