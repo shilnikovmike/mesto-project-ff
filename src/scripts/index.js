@@ -36,19 +36,19 @@ function openCardImagePopup(cardImage, cardTitle) {
   openModal(popupImage);
 }
 
-function fillingProfileForm() {
+function fillProfileForm() {
   nameInput.value = profileFormTitle.textContent;
   jobInput.value = profileFormDescr.textContent;
 }
 
-function profileFormSubmit(evt) {
+function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   profileFormTitle.textContent = nameInput.value;
   profileFormDescr.textContent = jobInput.value;
   closeModal(profilePopup);
 }
 
-function addingNewCardByUser(evt, item) {
+function addNewCardByUser(evt, item) {
   evt.preventDefault();
   item = {
     name: cardFormName.value,
@@ -62,8 +62,8 @@ function addingNewCardByUser(evt, item) {
 
 editButton.addEventListener('click', () => {
   openModal(profilePopup);
-  fillingProfileForm();
+  fillProfileForm();
 });
 addButton.addEventListener('click', () => openModal(cardPopup));
-cardForm.addEventListener('submit', addingNewCardByUser);
-profileForm.addEventListener('submit', profileFormSubmit);
+cardForm.addEventListener('submit', addNewCardByUser);
+profileForm.addEventListener('submit', handleProfileFormSubmit);
